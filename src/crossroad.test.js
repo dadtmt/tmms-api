@@ -1,4 +1,4 @@
-import { isChoiceMade } from './crossroad'
+import { isActive, isChoiceMade } from './crossroad'
 
 describe('isChoiceMade', () => {
   it('return false if no choices', () => {
@@ -49,5 +49,64 @@ describe('isChoiceMade', () => {
       id: 'CURRENT_CROSSROAD_ID'
     }
     expect(isChoiceMade(crossroad)).toBeFalsy()
+  })
+})
+
+describe('isActive', () => {
+  it ('return true if is ready', () => {
+    const crossroad = {
+      id: 'CURRENT_CROSSROAD_ID',
+      isReady: true
+    }
+    expect(isActive(crossroad)).toBeTruthy()
+  })
+  it ('return false if is ready', () => {
+    const crossroad = {
+      id: 'CURRENT_CROSSROAD_ID',
+      isReady: false
+    }
+    expect(isActive(crossroad)).toBeFalsy()
+  })
+  it ('return false if is ready and choice made', () => {
+    const crossroad = {
+      choices: {
+        edges: [
+          {
+            node: {
+              made: true
+            }
+          },
+          {
+            node: {
+              made: false
+            }
+          }
+        ]
+      },
+      id: 'CURRENT_CROSSROAD_ID',
+      isReady: true
+    }
+    expect(isActive(crossroad)).toBeFalsy()
+  })
+  it ('return false if is ready and choice not made', () => {
+    const crossroad = {
+      choices: {
+        edges: [
+          {
+            node: {
+              made: false
+            }
+          },
+          {
+            node: {
+              made: false
+            }
+          }
+        ]
+      },
+      id: 'CURRENT_CROSSROAD_ID',
+      isReady: false
+    }
+    expect(isActive(crossroad)).toBeFalsy()
   })
 })

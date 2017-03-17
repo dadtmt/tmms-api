@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`newChoice copy values and add interactive and made choice 1`] = `
+Object {
+  "interactive": true,
+  "made": false,
+  "some": "values",
+}
+`;
+
+exports[`newChoice copy values and add interactive false for characterSheet type 1`] = `
+Object {
+  "interactive": false,
+  "made": false,
+  "some": "values",
+  "type": "characterSheet",
+}
+`;
+
+exports[`newChoice copy values and add interactive false for dice type and content.master true 1`] = `
+Object {
+  "content": Object {
+    "master": true,
+  },
+  "interactive": false,
+  "made": false,
+  "some": "values",
+  "type": "dice",
+}
+`;

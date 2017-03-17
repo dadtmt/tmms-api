@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getCrossroadsEdges return crossroads edges from the current (first of editors edges) editor 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "node": Object {
+        "id": "FIRST_CROSSROAD_ID",
+      },
+    },
+    Object {
+      "node": Object {
+        "id": "SECOND_CROSSROAD_ID",
+      },
+    },
+  ],
+}
+`;
+
+exports[`getCrossroadsEdges return empty edges if loading or no value 1`] = `
+Object {
+  "edges": Array [],
+}
+`;
+
+exports[`getCurrentCrossroadId return first crossroad id 1`] = `"CURRENT_CROSSROAD_ID"`;
+
+exports[`getCurrentCrossroadId return null if no crossroads 1`] = `null`;
+
+exports[`splitCrossroads return currentCrossroad(first node) and lastCrossraods(the others) 1`] = `
+Object {
+  "current": Object {
+    "id": "CURRENT_CROSSROAD_ID",
+  },
+  "lasts": Array [
+    Object {
+      "node": Object {
+        "id": "SECOND_CROSSROAD_ID",
+      },
+    },
+    Object {
+      "node": Object {
+        "id": "THIRD_CROSSROAD_ID",
+      },
+    },
+  ],
+}
+`;
+
+exports[`splitCrossroads return empty nodes 1`] = `
+Object {
+  "current": null,
+  "lasts": Array [],
+}
+`;
+
+exports[`updateCrossroad apply func update to the current (first of crossroads edges) crossroad 1`] = `
+Object {
+  "viewer": Object {
+    "user": Object {
+      "editors": Object {
+        "edges": Array [
+          Object {
+            "node": Object {
+              "crossroads": Object {
+                "edges": Array [
+                  Object {
+                    "node": Object {
+                      "id": "CROSSROAD_ID",
+                    },
+                    "true": "updated",
+                  },
+                ],
+              },
+              "id": "EDITOR_ID",
+            },
+          },
+        ],
+      },
+    },
+  },
+}
+`;
+
+exports[`updateEditor apply func update to the current (first of editors edges) editor 1`] = `
+Object {
+  "viewer": Object {
+    "user": Object {
+      "editors": Object {
+        "edges": Array [
+          Object {
+            "node": Object {
+              "id": "EDITOR_ID",
+            },
+            "true": "updated",
+          },
+        ],
+      },
+    },
+  },
+}
+`;

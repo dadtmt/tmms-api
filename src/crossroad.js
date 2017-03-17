@@ -8,3 +8,8 @@ export const isChoiceMade = R.pipe(
     false
   )
 )
+
+export const isActive = R.converge(
+    R.and,
+    [R.propOr(false, 'isReady'), R.complement(isChoiceMade)]
+  )
