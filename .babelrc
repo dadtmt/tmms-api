@@ -1,6 +1,8 @@
 {
   "presets": ["latest", "stage-3"],
-  "ignore": [
-    "**/*.test.js"
-  ]
+  "env": {
+    "test": {
+      "presets": ["latest", "stage-3"]
+    }
+  }
 }

@@ -5,13 +5,21 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src -d lib",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watch"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.24.0",
+    "babel-eslint": "^7.1.1",
+    "babel-jest": "^19.0.0",
     "babel-preset-latest": "^6.24.0",
-    "babel-preset-stage-3": "^6.22.0"
+    "babel-preset-stage-3": "^6.22.0",
+    "eslint": "^3.17.1",
+    "eslint-plugin-jest": "^19.0.1",
+    "jest": "^19.0.2"
+  },
+  "dependencies": {
+    "ramda": "^0.23.0"
   }
 }
