@@ -1,0 +1,6 @@
+{
+  "presets": ["latest", "stage-3"],
+  "ignore": [
+    "**/*.test.js"
+  ]
+}
