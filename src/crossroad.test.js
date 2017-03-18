@@ -1,4 +1,63 @@
-import { isActive, isChoiceMade } from './crossroad'
+import {
+  addChoiceEdge,
+  deleteChoiceEdge,
+  isActive,
+  isChoiceMade
+} from './crossroad'
+
+describe('addChoiceEdge', () => {
+  it('add a choice edge', () => {
+    const choiceEdge = {
+      node: {
+        id: 'SECOND_CHOICE'
+      }
+    }
+    const crossroadEdge = {
+      node: {
+        choices: {
+          edges: [{
+            node: {
+              id: 'FIRST_CHOICE'
+            }
+          }]
+        },
+        id: 'CURRENT_CROSSROAD_ID'
+      }
+    }
+    expect(addChoiceEdge(choiceEdge)(crossroadEdge)).toMatchSnapshot()
+  })
+})
+
+describe('deleteChoiceEdge', () => {
+  it('deleteChoiceEdge a choice edge', () => {
+    const choiceEdge = {
+      node: {
+        id: 'SECOND_CHOICE'
+      }
+    }
+    const crossroadEdge = {
+      node: {
+        choices: {
+          edges: [
+            {
+              node: {
+                id: 'FIRST_CHOICE'
+              }
+            },
+            {
+              node: {
+                id: 'SECOND_CHOICE'
+              }
+            }
+          ]
+        },
+        id: 'CURRENT_CROSSROAD_ID'
+      }
+    }
+    expect(deleteChoiceEdge(choiceEdge)(crossroadEdge)).toMatchSnapshot()
+  })
+})
+
 
 describe('isChoiceMade', () => {
   it('return false if no choices', () => {
