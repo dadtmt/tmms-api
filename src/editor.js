@@ -9,6 +9,15 @@ export const getCrossroadsEdges = R.pipe(
   R.pathOr({ edges: [] }, ['node', 'crossroads'])
 )
 
+export const setCurrentCrossroad = (data, edge) => R.pipe(
+  updateEditor(
+    R.over(
+      R.lensPath(['node', 'crossroads', 'edges']),
+      R.prepend(edge)
+    )
+  )
+)(data)
+
 export const splitCrossroads = R.pipe(
   getCrossroadsEdges,
   R.prop('edges'),
