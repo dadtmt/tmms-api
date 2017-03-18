@@ -29,11 +29,9 @@ describe('addChoiceEdge', () => {
 })
 
 describe('deleteChoiceEdge', () => {
-  it('deleteChoiceEdge a choice edge', () => {
-    const choiceEdge = {
-      node: {
-        id: 'SECOND_CHOICE'
-      }
+  it('delete a choice edge', () => {
+    const choiceToDelete = {
+      id: 'SECOND_CHOICE'
     }
     const crossroadEdge = {
       node: {
@@ -54,7 +52,7 @@ describe('deleteChoiceEdge', () => {
         id: 'CURRENT_CROSSROAD_ID'
       }
     }
-    expect(deleteChoiceEdge(choiceEdge)(crossroadEdge)).toMatchSnapshot()
+    expect(deleteChoiceEdge(choiceToDelete)(crossroadEdge)).toMatchSnapshot()
   })
 })
 

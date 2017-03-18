@@ -22,7 +22,7 @@ Object {
 }
 `;
 
-exports[`deleteChoiceEdge deleteChoiceEdge a choice edge 1`] = `
+exports[`deleteChoiceEdge delete a choice edge 1`] = `
 Object {
   "node": Object {
     "choices": Object {

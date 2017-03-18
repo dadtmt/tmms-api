@@ -7,7 +7,7 @@ export const addChoiceEdge = edge => R.over(
 
 export const deleteChoiceEdge = edge => R.over(
   R.lensPath(['node', 'choices', 'edges']),
-  R.filter(({ node }) => node.id !== edge.node.id)
+  R.filter(({ node }) => node.id !== edge.id)
 )
 
 export const isChoiceMade = R.pipe(
