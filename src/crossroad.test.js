@@ -2,8 +2,127 @@ import {
   addChoiceEdge,
   deleteChoiceEdge,
   isActive,
-  isChoiceMade
+  isChoiceInteractive,
+  isChoiceMade,
+  isStepMade,
+  latestStep
 } from './crossroad'
+
+describe('isStepMade', () => {
+  const crossroad = {
+    choices: {
+      edges: [
+        {
+          node: {
+            step: 1,
+            made: true
+          }
+        },
+        {
+          node: {
+            step: 1,
+            made: false
+          }
+        },
+        {
+          node: {
+            step: 2,
+            made: false
+          }
+        },
+        {
+          node: {
+            step: 2,
+            made: false
+          }
+        }
+      ]
+    }
+  }
+  it('return true if one choice of step is made', () => {
+    expect(isStepMade(1)(crossroad)).toBeTruthy()
+  })
+
+  it('return false if no choice of step is made', () => {
+    expect(isStepMade(2)(crossroad)).toBeFalsy()
+  })
+})
+
+describe('latestStep', () => {
+  it('return highest step value', () => {
+    const crossroad = {
+      choices: {
+        edges: [
+          {
+            node: {
+              step: 1
+            }
+          },
+          {
+            node: {
+              step: 2
+            }
+          }
+        ]
+      }
+    }
+    expect(latestStep(crossroad)).toBe(2)
+  })
+})
+
+describe('isChoiceInteractive', () => {
+  const crossroad = {
+    choices: {
+      edges: [
+        {
+          node: {
+            step: 1,
+            made: true
+          }
+        },
+        {
+          node: {
+            step: 1,
+            made: false
+          }
+        },
+        {
+          node: {
+            step: 2,
+            made: false
+          }
+        },
+        {
+          node: {
+            step: 2,
+            made: false
+          }
+        }
+      ]
+    }
+  }
+  it('return true if no interactive choice made of same step', () => {
+    const choice = {
+      interactive: true,
+      step: 2
+    }
+    expect(isChoiceInteractive(choice)(crossroad)).toBeTruthy()
+  })
+  it('return false if not', () => {
+    const choice = {
+      interactive: true,
+      step: 1
+    }
+    expect(isChoiceInteractive(choice)(crossroad)).toBeFalsy()
+  })
+  it('return false if interactive false', () => {
+    const choice = {
+      interactive: false,
+      step: 2
+    }
+    expect(isChoiceInteractive(choice)(crossroad)).toBeFalsy()
+  })
+})
 
 describe('addChoiceEdge', () => {
   it('add a choice edge', () => {
@@ -145,7 +264,7 @@ describe('isActive', () => {
     }
     expect(isActive(crossroad)).toBeFalsy()
   })
-  it ('return false if is ready and choice not made', () => {
+  it ('return false if not ready and choice not made', () => {
     const crossroad = {
       choices: {
         edges: [

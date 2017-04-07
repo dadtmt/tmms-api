@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addChoiceEdge add a choice edge 1`] = `
+Object {
+  "node": Object {
+    "choices": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "id": "FIRST_CHOICE",
+          },
+        },
+        Object {
+          "node": Object {
+            "id": "SECOND_CHOICE",
+          },
+        },
+      ],
+    },
+    "id": "CURRENT_CROSSROAD_ID",
+  },
+}
+`;
+
+exports[`deleteChoiceEdge delete a choice edge 1`] = `
+Object {
+  "node": Object {
+    "choices": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "id": "FIRST_CHOICE",
+          },
+        },
+      ],
+    },
+    "id": "CURRENT_CROSSROAD_ID",
+  },
+}
+`;
