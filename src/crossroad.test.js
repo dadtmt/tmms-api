@@ -3,7 +3,6 @@ import {
   deleteChoiceEdge,
   isActive,
   isChoiceInteractive,
-  isChoiceMade,
   isStepMade,
   latestStep
 } from './crossroad'
@@ -175,86 +174,52 @@ describe('deleteChoiceEdge', () => {
   })
 })
 
-
-describe('isChoiceMade', () => {
-  it('return false if no choices', () => {
-    const crossroad = {
-      choices: {
-        edges: []
-      },
-      id: 'CURRENT_CROSSROAD_ID'
-    }
-    expect(isChoiceMade(crossroad)).toBeFalsy()
-  })
-  it('return true if one choice is made', () => {
-    const crossroad = {
-      choices: {
-        edges: [
-          {
-            node: {
-              made: true
-            }
-          },
-          {
-            node: {
-              made: false
-            }
-          }
-        ]
-      },
-      id: 'CURRENT_CROSSROAD_ID'
-    }
-    expect(isChoiceMade(crossroad)).toBeTruthy()
-  })
-  it('return false if no choice is made', () => {
-    const crossroad = {
-      choices: {
-        edges: [
-          {
-            node: {
-              made: false
-            }
-          },
-          {
-            node: {
-              made: false
-            }
-          }
-        ]
-      },
-      id: 'CURRENT_CROSSROAD_ID'
-    }
-    expect(isChoiceMade(crossroad)).toBeFalsy()
-  })
-})
-
 describe('isActive', () => {
-  it ('return true if is ready', () => {
+  const choice = {
+    interactive: true,
+    step: 1
+  }
+  it ('return true if is ready and no choice made at this step', () => {
     const crossroad = {
+      choices: {
+        edges: [
+          {
+            node: {
+              made: false,
+              interactive: true,
+              step: 1
+            }
+          }
+        ]
+      },
       id: 'CURRENT_CROSSROAD_ID',
       isReady: true
     }
-    expect(isActive(crossroad)).toBeTruthy()
+    expect(isActive(choice)(crossroad)).toBeTruthy()
   })
-  it ('return false if is ready', () => {
+  it ('return false if not ready', () => {
     const crossroad = {
       id: 'CURRENT_CROSSROAD_ID',
       isReady: false
     }
-    expect(isActive(crossroad)).toBeFalsy()
+    expect(isActive(choice)(crossroad)).toBeFalsy()
   })
-  it ('return false if is ready and choice made', () => {
+  it ('return false if ready and choice of same step is made', () => {
     const crossroad = {
       choices: {
         edges: [
           {
             node: {
-              made: true
+              made: true,
+              interactive: true,
+              step: 1
             }
           },
           {
             node: {
-              made: false
+              made: false,
+              interactive: true,
+              step: 1
             }
           }
         ]
@@ -262,7 +227,7 @@ describe('isActive', () => {
       id: 'CURRENT_CROSSROAD_ID',
       isReady: true
     }
-    expect(isActive(crossroad)).toBeFalsy()
+    expect(isActive(choice)(crossroad)).toBeFalsy()
   })
   it ('return false if not ready and choice not made', () => {
     const crossroad = {
@@ -270,12 +235,16 @@ describe('isActive', () => {
         edges: [
           {
             node: {
-              made: false
+              made: false,
+              interactive: true,
+              step: 1
             }
           },
           {
             node: {
-              made: false
+              made: false,
+              interactive: true,
+              step: 1
             }
           }
         ]
@@ -283,6 +252,6 @@ describe('isActive', () => {
       id: 'CURRENT_CROSSROAD_ID',
       isReady: false
     }
-    expect(isActive(crossroad)).toBeFalsy()
+    expect(isActive(choice)(crossroad)).toBeFalsy()
   })
 })

@@ -10,19 +10,13 @@ export const deleteChoiceEdge = edge => R.over(
   R.filter(({ node }) => node.id !== edge.id)
 )
 
-export const isChoiceMade = R.pipe(
-  R.pathOr([], ['choices', 'edges']),
-  R.map(R.path(['node', 'made'])),
-  R.reduce(
-    R.or,
-    false
-  )
+export const isActive = choice => R.converge(
+  R.and,
+  [
+    R.propOr(false, 'isReady'),
+    R.pipe(isChoiceInteractive(choice))
+  ]
 )
-
-export const isActive = R.converge(
-    R.and,
-    [R.propOr(false, 'isReady'), R.complement(isChoiceMade)]
-  )
 
 export const latestStep = R.pipe(
     R.pathOr([], ['choices', 'edges']),
@@ -44,7 +38,7 @@ export const isStepMade = step => R.pipe(
 )
 
 export const isChoiceInteractive = choice => R.pipe(
-    latestStep,
-    R.equals(R.prop('step', choice)),
+    isStepMade(R.prop('step', choice)),
+    R.not,
     R.and(R.prop('interactive', choice))
   )
