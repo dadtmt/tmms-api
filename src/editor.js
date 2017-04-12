@@ -1,5 +1,7 @@
 import R from 'ramda'
 
+import { currentStep } from './crossroad'
+
 export const getCrossroadsEdges = R.pipe(
   R.pathOr(
     [],
@@ -27,10 +29,19 @@ export const splitCrossroads = R.pipe(
   })
 )
 
-export const getCurrentCrossroadId = R.pipe(
+const getCurrentCrossroad = R.pipe(
   splitCrossroads,
-  R.prop('current'),
+  R.prop('current')
+)
+
+export const getCurrentCrossroadId = R.pipe(
+  getCurrentCrossroad,
   R.propOr(null, 'id')
+)
+
+export const getCurrentCrossroadStep = R.pipe(
+  getCurrentCrossroad,
+  currentStep
 )
 
 export const updateEditor = update => R.over(

@@ -2,6 +2,7 @@ import R from 'ramda'
 import {
   getCrossroadsEdges,
   getCurrentCrossroadId,
+  getCurrentCrossroadStep,
   setCurrentCrossroad,
   splitCrossroads,
   updateCrossroad,
@@ -132,6 +133,65 @@ describe('getCurrentCrossroadId', () => {
       }
     }
     expect(getCurrentCrossroadId(data)).toMatchSnapshot()
+  })
+})
+
+describe('getCurrentCrossroadStep', () => {
+  it('return 1 if no crossroads', () => {
+    const data = {}
+    expect(getCurrentCrossroadStep(data)).toBe(1)
+  })
+
+  it('return current step', () => {
+    const data = {
+      viewer: {
+        user: {
+          editors: {
+            edges: [{
+              node: {
+                crossroads: {
+                  edges: [
+                    {
+                      node: {
+                        choices: {
+                          edges: [
+                            {
+                              node: {
+                                made: true,
+                                step: 1
+                              }
+                            },
+                            {
+                              node: {
+                                made: false,
+                                step: 2
+                              }
+                            }
+                          ]
+                        },
+                        id: 'CURRENT_CROSSROAD_ID'
+                      }
+                    },
+                    {
+                      node: {
+                        id: 'SECOND_CROSSROAD_ID'
+                      }
+                    },
+                    {
+                      node: {
+                        id: 'THIRD_CROSSROAD_ID'
+                      }
+                    }
+                  ]
+                },
+                id: 'EDITOR_ID'
+              }
+            }]
+          }
+        }
+      }
+    }
+    expect(getCurrentCrossroadStep(data)).toBe(2)
   })
 })
 

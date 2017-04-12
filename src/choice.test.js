@@ -32,18 +32,38 @@ describe('isInteractive', () => {
 })
 
 describe('newChoice', () => {
+  const data = {
+    viewer: {
+      user: {
+        editors: {
+          edges: [{
+            node: {
+              crossroads: {
+                edges: [{
+                  node: {
+                    id: 'CROSSROAD_ID'
+                  }
+                }]
+              },
+              id: 'EDITOR_ID'
+            }
+          }]
+        }
+      }
+    }
+  }
   it('copy values and add interactive and made choice', () => {
     const values = {
       some: 'values'
     }
-    expect(newChoice(values)).toMatchSnapshot()
+    expect(newChoice(values)(data)).toMatchSnapshot()
   })
   it('copy values and add interactive false for characterSheet type', () => {
     const values = {
       some: 'values',
       type: 'characterSheet'
     }
-    expect(newChoice(values)).toMatchSnapshot()
+    expect(newChoice(values)(data)).toMatchSnapshot()
   })
   it(
   'copy values and add interactive false for dice type and content.master true',
@@ -55,7 +75,41 @@ describe('newChoice', () => {
         some: 'values',
         type: 'dice'
       }
-      expect(newChoice(values)).toMatchSnapshot()
+      expect(newChoice(values)(data)).toMatchSnapshot()
     }
   )
+  it('set step to step 2 if step 1 is made', () => {
+    const dataStep2 = {
+      viewer: {
+        user: {
+          editors: {
+            edges: [{
+              node: {
+                crossroads: {
+                  edges: [{
+                    node: {
+                      choices: {
+                        edges: [{
+                          node: {
+                            made: true,
+                            step: 1
+                          }
+                        }]
+                      },
+                      id: 'CROSSROAD_ID'
+                    }
+                  }]
+                },
+                id: 'EDITOR_ID'
+              }
+            }]
+          }
+        }
+      }
+    }
+    const values = {
+      some: 'values'
+    }
+    expect(newChoice(values)(dataStep2)).toMatchSnapshot()
+  })
 })

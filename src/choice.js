@@ -1,5 +1,7 @@
 import R from 'ramda'
 
+import { getCurrentCrossroadStep } from './editor'
+
 export const isInteractive = R.cond([
   [
     R.propEq('type', 'dice'),
@@ -9,8 +11,9 @@ export const isInteractive = R.cond([
   [R.T, R.T]
 ])
 
-export const newChoice = values => ({
+export const newChoice = values => data => ({
   ...values,
   interactive: isInteractive(values),
-  made: false
+  made: false,
+  step: getCurrentCrossroadStep(data)
 })

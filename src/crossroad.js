@@ -18,12 +18,23 @@ export const isActive = choice => R.converge(
   ]
 )
 
-export const latestStep = R.pipe(
-    R.pathOr([], ['choices', 'edges']),
-    R.map(R.path(['node', 'step'])),
-    R.sort((a, b) => b - a ),
-    R.head
-  )
+export const isChoiceInteractive = choice => R.pipe(
+  isStepMade(R.prop('step', choice)),
+  R.not,
+  R.and(R.prop('interactive', choice))
+)
+
+export const isCrossroadActive = crossroad => R.converge(
+  R.and,
+  [
+    R.propOr(false, 'isReady'),
+    R.complement(isLatestStepMade)
+  ]
+)(crossroad)
+
+export const isLatestStepMade = crossroad => isStepMade(
+  latestStep(crossroad)
+)(crossroad)
 
 export const isStepMade = step => R.pipe(
   R.pathOr([],['choices', 'edges']),
@@ -37,8 +48,15 @@ export const isStepMade = step => R.pipe(
   R.reduce(R.or, false)
 )
 
-export const isChoiceInteractive = choice => R.pipe(
-    isStepMade(R.prop('step', choice)),
-    R.not,
-    R.and(R.prop('interactive', choice))
+export const latestStep = R.pipe(
+    R.pathOr([{ node: { step: 1 } }], ['choices', 'edges']),
+    R.map(R.path(['node', 'step'])),
+    R.sort((a, b) => b - a ),
+    R.head
   )
+
+export const currentStep = crossroad =>R.ifElse(
+  isLatestStepMade,
+  R.pipe(latestStep, R.inc),
+  latestStep
+)(crossroad)
